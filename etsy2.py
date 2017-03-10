@@ -92,7 +92,7 @@ class Etsy():
         '''
         if not shop_id:
             shop_id = self.shop_id
-        full_url = '{}{}/listings/active'.format(self.base_url, shop_id)
+        full_url = '{}shops/{}/listings/active'.format(self.base_url, shop_id)
         params = {'api_key': self.key_string}
         if limit: params['limit'] = limit
         if offset is not None: params['offset'] = offset
@@ -127,12 +127,18 @@ class Etsy():
         '''
         if not shop_id:
             shop_id = self.shop_id
-        full_url = '{}{}/listings/active'.format(self.base_url, shop_id)
-        params = {'api_key': self.key_string}
+        full_url = '{}shops/{}/listings/active'.format(self.base_url, shop_id)
+        params = {}
         if limit: params['limit'] = limit
         if offset is not None: params['offset'] = offset
         if page: params['page'] = page
-        r = requests.get(full_url, params=params, timeout=timeout)
+        oauth = OAuth1Session(
+            self.key_string,
+            client_secret=self.shared_secret,
+            resource_owner_key=self.owner_key,
+            resource_owner_secret=self.owner_secret
+            )
+        r = oauth.get(full_url, params=params, timeout=timeout)
         return r
 
     def update_listing(
