@@ -40,7 +40,7 @@ class Etsy():
         permission_scope = ' '.join(permission_scope)
         full_url = '{}oauth/request_token?scope={}'.format(self.base_url, permission_scope)
         oauth = OAuth1Session(self.key_string, client_secret=self.shared_secret)
-        fetch_response = oauth.fetch_request_token(url)
+        fetch_response = oauth.fetch_request_token(full_url)
         owner_key = fetch_response.get("oauth_token")
         owner_secret = fetch_response.get("oauth_token_secret")
         login_url = fetch_response.get("login_url")
