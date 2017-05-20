@@ -127,7 +127,7 @@ class Etsy():
         '''
         if not shop_id:
             shop_id = self.shop_id
-        full_url = '{}shops/{}/listings/active'.format(self.base_url, shop_id)
+        full_url = '{}shops/{}/listings/inactive'.format(self.base_url, shop_id)
         params = {}
         if limit: params['limit'] = limit
         if offset is not None: params['offset'] = offset
